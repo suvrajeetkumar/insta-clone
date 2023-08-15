@@ -8,40 +8,35 @@ const Home = () =>{
     const [data,setData] = useState(null)
     
     useEffect(()=>{
-        fetch('/getsubposts',{
+        const getSubPostsPromise = fetch('/getsubposts',{
             
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
-        }).then(res=>res.json())
-        .then(datas=>{
-            console.log(datas)
-            if(data){
-                setData(...data, datas.posts)
-            } else {
-                setData(datas.posts);
-            }
-        })
+        }).then(res => res.json())
 
-        fetch('/mypost',{
+        const myPostPromise = fetch('/mypost',{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
-        }).then(res=>res.json())
-        .then(result=>{
-            console.log("this")
-            
-            console.log(result);
-            var myPosts = [];
-            if(data){
-                myPosts = [...data, ...result.photos, ...result.tweets];
-            } else {
-                myPosts = [...result.photos, ...result.tweets];
-            }
-            const sortedPosts = myPosts.sort(sortByCreatedAt);
-            console.log("lets check the sorted Posts before setstate => ", sortedPosts);
-            setData(sortedPosts);
+        }).then(res => res.json())
+
+        Promise.all([getSubPostsPromise, myPostPromise])
+        .then(([subPostsData, myPostData]) => {
+        
+          // Combine and sort the posts
+          const allPosts = [
+            ...(subPostsData.posts || []),
+            ...(myPostData.photos || []),
+            ...(myPostData.tweets || [])
+          ];
+          const sortedPosts = allPosts.sort(sortByCreatedAt);
+          setData(sortedPosts);
         })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+
     },[])
 
     function sortByCreatedAt(a, b) {
