@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 
 //connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/instagram', {useNewUrlParser: true});
+
+// donot uncomment the above 2 lines they were commented from start.
+
 mongoose.connect(MONGOURI,{useNewUrlParser: true});
 mongoose.connection.on('connected',()=>{
     console.log("yeah connected to mongodb atlas")

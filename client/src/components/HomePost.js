@@ -22,7 +22,10 @@ import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth:"50vw"
+    width: "500px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     
   },
   media: {
@@ -43,17 +46,29 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
-  llke:{
+  like:{
       color:"red"
   },
   unlike:{
       color:""
+  },
+  postCardContent: {
+    width: "100%",
+    padding: "0px 15px 24px 15px",
+    boxSizing: "border-box",
+  },
+  postCardHeader: {
+    width: "100%",
+    paddingRight: "15px",
+    boxSizing: "border-box",
   }
+
 }));
 
 export default function RecipeReviewCard(props) {
 
   const {state,dispatch} = useContext(UserContext)
+  const [comment, setComment] = React.useState("");
 
   const classes = useStyles();
   const [like, setLike] = React.useState(false);
@@ -88,11 +103,13 @@ export default function RecipeReviewCard(props) {
   const deleteCommentHandle = (commentid) => {
     props.deleteCommentfun(props.id,commentid)
   }
+
+  console.log("comments are => ", props.comments);
   
   return (
       <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"3vh"}}>
     <Card className={classes.root}>
-      <Link to={props.postedBy._id !== state._id?"/profiles/"+props.postedBy._id:"/profile"}><CardHeader
+      <Link className={classes.postCardHeader} to={props.postedBy._id !== state._id?"/profiles/"+props.postedBy._id:"/profile"}><CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             R
@@ -112,14 +129,11 @@ export default function RecipeReviewCard(props) {
       
      <img className={classes.media} src={props.src}></img>
            
-      <CardContent>
+      <CardContent className={classes.postCardContent}>
       
           <h4 style={{color:"black"}}>{props.name}</h4>
         
         <h5> {props.description}</h5>
-         
-        
-      </CardContent>
    
       <IconButton aria-label="add to favorites" style={{color:like?"red":""}} onClick={likeHandle} >
           <FavoriteIcon />
@@ -138,11 +152,13 @@ export default function RecipeReviewCard(props) {
         }
         <form onSubmit={(e)=>{
           e.preventDefault()      //this to prevent the form from refreshing after the form has been submitted
-          props.commentfun(e.target[0].value,props.id)
+          props.commentfun(e.target[0].value,props.id);
+          setComment("");
         }}>
-        <TextField id="standard-basic" label="add a comment" />
+        <TextField id="standard-basic" value={comment} onChange={(e) => setComment(e.target.value)} label="add a comment" />
         <button type="submit">post</button>
         </form>
+        </CardContent>
     </Card>
     </div>
   );

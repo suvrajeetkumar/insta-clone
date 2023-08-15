@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/accounts');
 const Post = require('../models/posts')
+const Tweet = require('../models/tweets');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
@@ -35,7 +36,7 @@ router.get('/user/:id',requireLogin,(req,res)=>{
 })
 
 router.post('/signup',function(req,res){
-    const{name,email,password,pic} = req.body;
+    const{name,email,password,pic,phoneNumber} = req.body;
     if(!email||!password||!name){
         return res.status(422).json({error:"please add all the feilds"})     //to also change the status code to 422 which means request was formed but unable to follow due to semantic errors
     }
@@ -51,7 +52,8 @@ router.post('/signup',function(req,res){
                 email,
                 password: hashedpassword,
                 name,
-                pic
+                pic,
+                phoneNumber
             })
     
             user.save()
@@ -97,6 +99,8 @@ router.post('/signin' , function(req,res){
             console.log(err);
         })
     })
+
+
 })
 
 router.put('/follow',requireLogin,(req,res)=>{
@@ -152,12 +156,22 @@ router.put('/updatepic',requireLogin,(req,res)=>{
     })
 })
 
-router.post('/searchuser',(req,res)=>{
-    let usertyped = new RegExp("^"+req.body.query)
-    User.find({email:{$regex:usertyped}})
-    .select("email _id")
-    .then(User => res.json(User))
-    .catch(err => console.log(err))
+router.post('/search',(req,res)=>{
+    const query = req.body.query;
+
+    const userSearch = User.find({ email: { $regex: "^" + query, $options: "i" } }).select("email _id");
+    const tweetSearch = Tweet.find({ tweet: { $regex: query, $options: "i" } })
+      .populate('postedBy', '_id name')
+      .select('tweet postedBy');
+  
+    Promise.all([userSearch, tweetSearch])
+      .then(([users, tweets]) => {
+        res.json({ users, tweets });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: 'An error occurred' });
+      });
 })
 
 

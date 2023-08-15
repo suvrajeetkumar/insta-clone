@@ -21,5 +21,41 @@
   }
   .textfields{
       margin:4vh;
-      
+  }
+
+  .textField-styles{
+    width: 30vw;
+  }
+
+  .textField-styles-last {
+    width: 30vw;
+  }
+
+  .file-field {
+    margin-bottom: 20px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .cardComponent {
+        width: 60vw;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .cardComponent{
+        width: 75vw;
+    }
+
+    .textfields{
+        margin:0vh;
+    }
+
+    .textField-styles{
+        width: auto;
+      }
+
+    .textField-styles-last {
+      margin-bottom: 20px !important;
+      width: auto;
+    }
   }

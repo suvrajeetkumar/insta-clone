@@ -1,10 +1,122 @@
 .gallery{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(3,1fr);
 }
+
+.gallery-container {
+    display: flex;
+    justify-content: center;
+}
+
 .item{
-    width:25vw;
-  
+    width: 100%;
+    height: 100%;
     background-size: contain;
+}
+
+.profile-cards {
+    width: 300px;
+    height: 300px;
+    background-size: contain;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.tweet {
+    background: #cbf2ff;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+.tweet-cards {
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 0 10px #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.link-style-none {
+    text-decoration: none;
+    color: black;
+}
+
+.profile-section-wrapper {
+    display:flex;
+    justify-content:center;
+    margin: 5vh 0;
+    border-bottom: 2px solid grey;
+}
+
+.photo-pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+}
+
+.profile-user-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.profile-item {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.profile-user-section {
+    width: 30vw;
+    padding-left: 5vw;
+    margin-top: 40px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .profile-user-section {
+        padding-left: 100px !important;
+    }
+
+    .gallery{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .gallery{
+        grid-template-columns: 1fr;
+    }
+
+    .profile-section-wrapper {
+        justify-content: start;
+    }
+
+    .photo-pic {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-item {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 5px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .profile-user-section {
+        width: max-content;
+        padding-left: 5vw !important;
+        margin-left: 20px;
+        margin-top: 15px;
+    }
+
+    .profile-user-name {
+        margin-bottom: 0;
+    }
+
 }

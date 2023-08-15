@@ -2,14 +2,18 @@ import React,{useEffect,createContext,useReducer, useContext} from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import {BrowserRouter,Route,Switch,useHistory} from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/Login';
-import UserProfile from './components/UserProfile';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import UserProfile from './pages/UserProfile';
 import OtherUser from './components/OtherProfiles'
-import Signup from './components/Signup';
-import Profile from './components/Profile';
-import CreatePost from './components/CreatePost'
+import Signup from './pages/Signup';
+import Profile from './pages/Profile';
 import {reducer,initialState} from './reducers/userReducer'
+import SelectPostType from './components/createPost/SelectPostType';
+import CreateTweet from './components/createPost/CreateTweet';
+import CreatePhotoPost from './components/createPost/CreatePhotoPost';
+import EditTweet from './components/createPost/EditTweet';
+import TweetPage from './pages/TweetPage';
 
 
 export const UserContext = createContext()
@@ -45,11 +49,21 @@ const Routing = () =>{
     <Route path="/profiles/:userid">
       <UserProfile/>
     </Route>
-    <Route path="/createpost">
-      <CreatePost/>
+    <Route exact path="/createpost">
+      <SelectPostType/>
+    </Route>
+    <Route path="/createpost/tweet">
+      <CreateTweet/>
+    </Route>
+    <Route path="/createpost/photo">
+      <CreatePhotoPost/>
     </Route>
     <Route path="/otherprofiles">
       <OtherUser/>
+    </Route>
+    <Route path="/edit/:postId" component={EditTweet}>
+    </Route>
+    <Route path="/tweet/:postId" component={TweetPage}>
     </Route>
     </Switch>
   )

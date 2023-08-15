@@ -13,45 +13,79 @@ import SearchIcon from '@material-ui/icons/Search';
 import '../App.css';
 import {UserContext} from '../App'
 import { useEffect } from 'react';
+import '../styles/Navbar.css';
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
 </style>
 
 
+const useStyles = makeStyles((theme) => ({
+  searchLink: {
+    textDecoration: "none",
+    color: "black",
+  },
+}))
+
+
 
 export default function SearchAppBar() {
   const [open, setOpen] = useState(false);
   const [searchUsers,setSeachUsers] = useState([]);
-const {state,dispatch} = useContext(UserContext) 
-const [location,setLocation] = useState("");
-const history = useHistory()
+  const {state,dispatch} = useContext(UserContext) 
+  const [location,setLocation] = useState("/");
+  const history = useHistory();
+  const classes = useStyles();
+  const [ showBurgerMenu, setShowBurgerMenu ] = useState(null);
 
-useEffect(()=>{
-  return history.listen((location) => { 
-    var str = location.pathname
-  
-  setLocation(str)
-  console.log(str)
- })
-  
-},[history])
+  const humbergerMenuHandler = () => {
+    console.log("hamburerger menu toggle!")
+    setShowBurgerMenu(!showBurgerMenu);  
+  }
 
-const handleOpen = () => {
-  setOpen(true);
-};
+  useEffect(()=>{
+    return history.listen((location) => { 
+      var str = location.pathname
+    
+    setLocation(str)
+    console.log("the location is=> ", str);
+   })
 
-const handleClose = () => {
-  setOpen(false);
-};
+  },[history])
+
+  useEffect(()=>{
+
+    const navbarCard = document.querySelector(".navbar-menu");
+    if(showBurgerMenu !== null){
+        if(!showBurgerMenu) {
+            navbarCard.classList.remove("show-navbar");
+            navbarCard.classList.add("hide-navbar");
+        } else if(showBurgerMenu) {
+            navbarCard.classList.remove("hide-navbar");
+            navbarCard.classList.add("show-navbar");
+        }
+    }
+  }, [showBurgerMenu])
+
+  useEffect(()=>{
+    console.log("searchUser state => ", searchUsers);
+  }, [searchUsers])
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 const renderList = () =>{
   if(state){
     return [
-      <div style={{padding:"1%" ,display:"inline"}}><Link to="/profile" style={{textDecoration:"none"}}>Profile</Link></div>,
-      <div style={{padding:"1%" ,display:"inline"}}><Link to="/createpost" style={{textDecoration:"none"}}>CreatePost</Link></div>,
-      <div style={{padding:"1%" ,display:"inline"}}><Link to="/" style={{textDecoration:"none"}}>Home</Link></div>,
-      <Button variant="contained" color="secondary" onClick={()=>{
+      <div className='navbar-item-text-style'><Link to="/profile" className="navbar-link-style">Profile</Link></div>,
+      <div className='navbar-item-text-style'><Link to="/createpost" className="navbar-link-style">CreatePost</Link></div>,
+      <div className='navbar-item-text-style'><Link to="/" className="navbar-link-style">Home</Link></div>,
+      <Button variant="contained" className='logout-btn' color="secondary" onClick={()=>{
         localStorage.clear()
         dispatch({type:"CLEAR"})
         history.push("/login")
@@ -61,8 +95,8 @@ const renderList = () =>{
   }
   else{
     return[
-      <div style={{padding:"1%" ,display:"inline"}}><Link to="/signup" style={{textDecoration:"none"}}>Signup</Link></div>,
-      <div style={{padding:"1%" ,display:"inline"}}><Link to="/login" style={{textDecoration:"none"}}>Login</Link></div>,
+      <div style={{padding:"1%" ,display:"inline"}}><Link to="/signup" className="navbar-link-style">Signup</Link></div>,
+      <div style={{padding:"1%" ,display:"inline"}}><Link to="/login" className="navbar-link-style">Login</Link></div>,
       
      
     ]
@@ -96,7 +130,7 @@ if(location === '/'){
     aria-labelledby="simple-modal-title"
 aria-describedby="simple-modal-description"
   >
-  <div style={{"overflow-y":"scroll",width:"30vw" , height:"50vh" , position:'absolute' ,top:"1%", left:"69%" , padding:"4% 2%" , boxSizing:"border-box", backgroundColor:"white"}}>
+  <div className='search-modal'>
   <InputBase
       placeholder="Search…"
       style={{border:"1px solid black"}}
@@ -105,9 +139,12 @@ aria-describedby="simple-modal-description"
     />
   <ul style = {{"list-style-type":"none"}}>
   {searchUsers.map((item)=>{
+    if(item.tweet){
+      return <Link className={classes.searchLink} to={`/tweet/${item._id}`} onClick={handleClose}><li><div className='search-item'>{item.tweet}</div></li></Link>
+    }
     return(
       
-        <Link to={state._id&&item._id === state._id?"/profile":"/profiles/"+item._id} onClick={handleClose}><li><h2>{item.email}</h2></li></Link>
+        <Link className={classes.searchLink} to={state._id&&item._id === state._id?"/profile":"/profiles/"+item._id} onClick={handleClose}><li><div className='search-item'>{item.email}</div></li></Link>
       
     )
   })}
@@ -123,7 +160,7 @@ aria-describedby="simple-modal-description"
 }
 
   const searchHandle =(query)=>{
-    fetch('/searchuser',{
+    fetch('/search',{
     method:'post',
     headers:{
       'Content-type': 'application/json'
@@ -134,8 +171,8 @@ aria-describedby="simple-modal-description"
 
   }).then(res => res.json())
   .then((result)=>{
-    setSeachUsers(result)
-    console.log(searchUsers)
+    setSeachUsers([ ...result.tweets, ...result.users])
+    console.log("search result are => ", [ ...result.tweets, ...result.users])
   }).catch((err)=>{
     console.log(err)
   })
@@ -145,14 +182,13 @@ aria-describedby="simple-modal-description"
   return (
     <div>
       <AppBar position="static" style={{backgroundColor:"white",color:"black"}}>
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
+        
+          <IconButton onClick={humbergerMenuHandler} className='hamburger-icon' edge="start" color="inherit" aria-label="open drawer">
             <MenuIcon />
           </IconButton>
-
+          <div className="instagramtext">Instagram</div> 
+          <div className='navbar-menu'>
           {renderList()}
-         
-
 
           <div style={{
                 position:"relative" ,
@@ -162,13 +198,10 @@ aria-describedby="simple-modal-description"
                 justifyContent: 'center'
           }}>
           
-           <div className="instagramtext">Instagram</div> 
-          
           </div >
           
           {renderSearch()}
-
-                 </Toolbar>
+          </div>
       </AppBar>
     </div>
   );

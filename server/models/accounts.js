@@ -9,16 +9,21 @@ const accountsSchema = new Schema({
     },
     email:{
         type:String,
-        required:[true,'Name field is required']
+        required:[true,'Email field is required']
     },
     password:{
         type:String,
-        required:[true,'Name field is required']
+        required:[true,'Password field is required']
     },
     
     pic:{
         type:String,
         default:"https://res.cloudinary.com/suvra15/image/upload/v1623251633/noimage_nayp5f.png"
+    },
+
+    phoneNumber: {
+        type:String,
+        required:[true,'Phone Number field is required']
     },
 
     followers:[{
