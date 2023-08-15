@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+BELOW are the features of the app:
+     
+     1. We can Create our account in the sign up page
+     2. We can create a new post (only text 
+message) and share with other users.
+     3. Users can Like, comment and share the post/tweet.
+     4. Users(Owner) can update/edit existing posts
+     5. Users(Owners) can delete posts
+     6. We can both search for posts and for other users also.
+     7. We can follow and unfollow other users.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+     Below are the pages:
+     HomePage: Here posts of your own and posts of people that you follow/subscribe are shown here
+     ProfilePage: This page lists the different posts you have uploaded. Also shows number of people you have followed and your own following.
+     CreatePost: This page allows you to create new posts
+     EditPost: This page allows you to edit existing posts.
+     PostDetails Page: this page opens when you click on the post. This page gives the details of the post.
+     Search Feature: you can use the searchBar to search for either other posts or other users.
 
-## Available Scripts
+Instructions:
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+     1. Time duration will be three consecutive days. i.e., the completed 
+project should be mailed back by 15th August 2023.
+     2. Any presence of plagiarism will discard the candidate profile 
+from entire interview process.
+     3. Code should be optimized, clean and as per convention.
+     4. Web application pages should be responsive.
